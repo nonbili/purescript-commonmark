@@ -1,10 +1,17 @@
 var commonmark = require("commonmark");
 
-exports.newParser_ = function() {
+exports.renderString_ = function(input) {
+  var parser = new commonmark.Parser();
+  var renderer = new commonmark.HtmlRenderer();
+  var parsed = parser.parse(input);
+  return renderer.render(parsed);
+};
+
+exports.newParser = function() {
   return new commonmark.Parser();
 };
 
-exports.newHtmlRenderer_ = function() {
+exports.newHtmlRenderer = function() {
   return new commonmark.HtmlRenderer();
 };
 
@@ -14,11 +21,4 @@ exports.parse_ = function(input, parser) {
 
 exports.render_ = function(node, renderer) {
   return renderer.render(node);
-};
-
-exports.renderString = function(input) {
-  var reader = new commonmark.Parser();
-  var writer = new commonmark.HtmlRenderer();
-  var parsed = reader.parse(input);
-  return writer.render(parsed);
 };
