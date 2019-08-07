@@ -2,7 +2,7 @@ module Test.Main where
 
 import Prelude
 
-import CommonMark (render)
+import CommonMark (renderString, newParser, newHtmlRenderer, parse, render)
 import Data.Traversable (sequence_)
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
@@ -18,6 +18,15 @@ cases =
 
 main :: Effect Unit
 main = do
-  test "render" $ do
+  test "renderString" $ do
     sequence_ $ cases <#> \(Tuple input output) ->
-      expectToEqual (render input) output
+      expectToEqual (renderString input) output
+
+  test "parse and render" $ do
+    let
+      parser = newParser
+      renderer = newHtmlRenderer
+    sequence_ $ cases <#> \(Tuple input output) -> do
+      let
+        parsed = parse input parser
+      expectToEqual (render parsed renderer) output
