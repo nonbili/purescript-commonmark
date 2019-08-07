@@ -1,0 +1,27 @@
+{
+  "name": "purescript-commonmark",
+  "description": "A purescript wrapper of commonmark",
+  "keywords": [
+    "purescript",
+    "markdown",
+    "commonmark"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nonbili/purescript-commonmark.git"
+  },
+  "license": "BSD-3-Clause",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^4.1.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^4.0.0",
+    "purescript-jest": "^0.3.0"
+  }
+}
