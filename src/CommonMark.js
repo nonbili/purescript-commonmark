@@ -7,12 +7,12 @@ exports.renderString_ = function(input) {
   return renderer.render(parsed);
 };
 
-exports.newParser_ = function() {
-  return new commonmark.Parser();
+exports.newParser_ = function(opts) {
+  return new commonmark.Parser(opts);
 };
 
-exports.newHtmlRenderer_ = function() {
-  return new commonmark.HtmlRenderer();
+exports.newHtmlRenderer_ = function(opts) {
+  return new commonmark.HtmlRenderer(opts);
 };
 
 exports.parse_ = function(input, parser) {
