@@ -1,33 +1,71 @@
 module CommonMark
   ( renderString
+  , ParserOptions
+  , smart
   , Parser
-  , Node
-  , HtmlRenderer
   , newParser
+  , RendererOptions
+  , sourcepos
+  , safe
+  , softbreak
+  , esc
+  , HtmlRenderer
   , newHtmlRenderer
+  , Node
   , parse
   , render
   ) where
 
+import Prelude
+
+import Data.Options as O
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, runEffectFn1, runEffectFn2)
+import Foreign (Foreign)
 
-data Parser
+foreign import data Parser :: Type
 
-data Node
+foreign import data Node :: Type
 
-data HtmlRenderer
+foreign import data HtmlRenderer :: Type
 
 -- | Parse and render markdown string to html string.
 renderString :: String -> Effect String
 renderString = runEffectFn1 renderString_
 foreign import renderString_ :: EffectFn1 String String
 
+-- Check https://github.com/commonmark/commonmark.js to see available Parser
+-- options.
+data ParserOptions
+
+smart :: O.Option ParserOptions Boolean
+smart = O.opt "smart"
+
 -- | Create a new CommonMark Parser.
-foreign import newParser :: Effect Parser
+newParser :: O.Options ParserOptions -> Effect Parser
+newParser opts = runEffectFn1 newParser_ $ O.options opts
+foreign import newParser_ :: EffectFn1 Foreign Parser
+
+-- Check https://github.com/commonmark/commonmark.js to see available
+-- HtmlRenderer options.
+data RendererOptions
+
+sourcepos :: O.Option RendererOptions Boolean
+sourcepos = O.opt "sourcepos"
+
+safe :: O.Option RendererOptions Boolean
+safe = O.opt "safe"
+
+softbreak :: O.Option RendererOptions String
+softbreak = O.opt "softbreak"
+
+esc :: O.Option RendererOptions (String -> Boolean -> String)
+esc = O.opt "esc"
 
 -- | Create a new CommonMark HtmlRenderer.
-foreign import newHtmlRenderer :: Effect HtmlRenderer
+newHtmlRenderer :: O.Options RendererOptions -> Effect HtmlRenderer
+newHtmlRenderer opts = runEffectFn1 newHtmlRenderer_ $ O.options opts
+foreign import newHtmlRenderer_ :: EffectFn1 Foreign HtmlRenderer
 
 -- | Parse markdown string to CommonMark Node.
 parse :: String -> Parser -> Effect Node

@@ -25,8 +25,8 @@ main = do
       expectToEqual html output
 
   test "parse and render" $ do
-    parser <- liftEffect newParser
-    renderer <- liftEffect newHtmlRenderer
+    parser <- liftEffect $ newParser mempty
+    renderer <- liftEffect $ newHtmlRenderer mempty
     sequence_ $ cases <#> \(Tuple input output) -> do
       parsed <- liftEffect $ parse input parser
       html <- liftEffect $ render parsed renderer

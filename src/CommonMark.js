@@ -7,11 +7,11 @@ exports.renderString_ = function(input) {
   return renderer.render(parsed);
 };
 
-exports.newParser = function() {
+exports.newParser_ = function() {
   return new commonmark.Parser();
 };
 
-exports.newHtmlRenderer = function() {
+exports.newHtmlRenderer_ = function() {
   return new commonmark.HtmlRenderer();
 };
 
